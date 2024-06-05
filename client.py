@@ -13,6 +13,7 @@ client.connect(('127.0.0.1', 55555))
 key = client.recv(1024)
 cipher_suite = Fernet(key)
 
+
 # Listening to Server and Sending Nickname
 def receive():
     while True:
@@ -30,11 +31,13 @@ def receive():
             client.close()
             break
 
+
 def write():
     while True:
         message = f'{nickname}: {input("")}'
         encrypted_message = cipher_suite.encrypt(message.encode('ascii'))
         client.send(encrypted_message)
+
 
 # Starting Threads For Listening And Writing
 receive_thread = threading.Thread(target=receive)

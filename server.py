@@ -20,12 +20,14 @@ server.listen()
 clients = []
 nicknames = []
 
+
 # Sending Messages To All Connected Clients
 def broadcast(message, client_socket=None):
     encrypted_message = cipher_suite.encrypt(message)
     for client in clients:
         if client != client_socket:
             client.send(encrypted_message)
+
 
 # Handling Messages From Clients
 def handle(client):
@@ -44,6 +46,7 @@ def handle(client):
             broadcast(f'{nickname} left!'.encode('ascii'))
             nicknames.remove(nickname)
             break
+
 
 # Receiving / Listening Function
 def receive():
@@ -69,6 +72,7 @@ def receive():
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
+
 
 print("Server is listening...")
 receive()
